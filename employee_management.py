@@ -25,9 +25,11 @@ class Employee:
         return cls.all_employees
 
     @classmethod
-    def get_eligible_retirees(cls, ignore=[]):
+    def get_eligible_retirees(cls, ignore=None):
+        if ignore is None:
+            ignore = []
         not_ignored = {e_id: e for e_id, e in cls.all_employees.items() if e_id not in ignore}
-        return {e_id: e for e_id, e in not_ignored.items() if e.age > 66 and e.retired == False}
+        return {e_id: e for e_id, e in not_ignored.items() if e.age > 66 and not e.retired}
 
     @classmethod
     def retire_eligible(cls, ignore=[]):
